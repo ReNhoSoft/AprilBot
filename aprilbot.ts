@@ -1,10 +1,12 @@
 import { Message } from "discord.js";
 
-class AprilBot
+export class AprilBot
 {
-    constructor() { };
-
     lobbies : Array<ILobbyEntry>;
+
+    constructor() {
+        this.lobbies = [];
+     };
 
     AddLobby(message : Message, user : string)
     {
@@ -44,10 +46,10 @@ class AprilBot
 
     ShowHelp(message : Message)
     {
-
+        
     }
 
-    
+
 }
 
 interface ILobbyEntry {

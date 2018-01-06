@@ -4,7 +4,11 @@
   "description": "Bot for the GGxrd Discord Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist",
+    "start": "tsc npm-run-all clean --parallel watch:build watch:server --print-label",
+    "watch:build": "tsc",
+    "watch:server": "nodemon './dist/index.js' --watch './dist'"
   },
   "repository": {
     "type": "git",
@@ -25,14 +29,18 @@
   },
   "homepage": "https://github.com/ReNhoSoft/AprilBot#readme",
   "dependencies": {
+    "@types/node": "^8.5.7",
     "bufferutil": "^3.0.3",
     "discord.js": "^11.2.1",
     "erlpack": "github:hammerandchisel/erlpack",
+    "gulp": "^3.9.1",
     "libsodium": "^0.7.3",
     "libsodium-wrappers": "^0.5.4",
     "node-opus": "^0.2.7",
     "opusscript": "0.0.3",
     "sodium": "^2.0.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.6.2",
     "uws": "^0.14.5"
   }
 }
