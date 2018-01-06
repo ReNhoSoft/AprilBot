@@ -1,0 +1,38 @@
+{
+  "name": "aprilbot",
+  "version": "1.0.0",
+  "description": "Bot for the GGxrd Discord Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReNhoSoft/AprilBot.git"
+  },
+  "keywords": [
+    "GGxrd",
+    "Guilty",
+    "Gear",
+    "Xrd",
+    "Discord",
+    "Bot"
+  ],
+  "author": "Renhosoft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReNhoSoft/AprilBot/issues"
+  },
+  "homepage": "https://github.com/ReNhoSoft/AprilBot#readme",
+  "dependencies": {
+    "bufferutil": "^3.0.3",
+    "discord.js": "^11.2.1",
+    "erlpack": "github:hammerandchisel/erlpack",
+    "libsodium": "^0.7.3",
+    "libsodium-wrappers": "^0.5.4",
+    "node-opus": "^0.2.7",
+    "opusscript": "0.0.3",
+    "sodium": "^2.0.1",
+    "uws": "^0.14.5"
+  }
+}
