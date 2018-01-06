@@ -30,17 +30,6 @@
   "homepage": "https://github.com/ReNhoSoft/AprilBot#readme",
   "dependencies": {
     "@types/node": "^8.5.7",
-    "bufferutil": "^3.0.3",
-    "discord.js": "^11.2.1",
-    "erlpack": "github:hammerandchisel/erlpack",
-    "gulp": "^3.9.1",
-    "libsodium": "^0.7.3",
-    "libsodium-wrappers": "^0.5.4",
-    "node-opus": "^0.2.7",
-    "opusscript": "0.0.3",
-    "sodium": "^2.0.1",
-    "tsc": "^1.20150623.0",
-    "typescript": "^2.6.2",
-    "uws": "^0.14.5"
+    "discord.js": "^11.2.1"
   }
 }
