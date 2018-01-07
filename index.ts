@@ -33,7 +33,7 @@ client.on('message', message => {
   } else if(message.content.toLowerCase().includes("april close")) {
     aprilbot.CloseLobby(message, user);
 
-  } else if(message.content.toLowerCase().startsWith("april list")) {
+  } else if(message.content.toLowerCase().startsWith("april list") || message.content.toLowerCase() === "april where dem bois") {
     aprilbot.ListLobbies(message, user);
     
   } else if(message.content.toLowerCase().startsWith("april help")) {
