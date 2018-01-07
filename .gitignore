@@ -63,3 +63,6 @@ typings/
 # js compiled files
 *.js
 *.js.map
+
+#lock on package json
+package-lock.json
