@@ -21,7 +21,10 @@ client.on('ready', () => {
 
 // Create an event listener for messages
 client.on('message', message => {
-  
+  if(message.channel.id != '399674427329085442'){
+    return;
+  }
+
   var user = message.author.username + '#' + message.author.discriminator
   if(message.content.includes("steam://joinlobby/"))
   {

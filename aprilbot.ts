@@ -2,11 +2,24 @@ import { Message } from "discord.js";
 
 export class AprilBot
 {
+static HELP_MSG = "Hello! :cat: I'm April of the Jellyfish Pirates and I'm here to help you find any recently posted lobbies.\n"
+    + "Here is a list of my commands:\n"
+    + "April list or lobby? - Lists all lobbies\n"
+    + "April close / April close n - Closes lobby n, with where n is a number ex; April close 3 would close lobby 3 in the lobby list.\n"
+    + "April question - A fortune telling command, use at your own risk my fortunes always come true. ex. April question, will I win EVO?  Like a magic "
+    + "8 ball, ask yes or no questions.\n\n"
+    + "To add a lobby to the list, just simply post any steam:// style lobby postings, so I'm very easy to use, and I won't list duplicates, and will "
+    + "delete the oldest lobbies in the list incase anyone forgets to close theirs.\n"
+    + "Note my commands only work in steam-netplay.\n"
+    + "If there's any problems or you have suggestions, message Lucky.\n"
+    + "Here is instructions on how to create your lobby, just paste the steam link in the channel when you're done and I'll keep track of it and help "
+    + "others find your lobby :3 \nhttps://cdn.discordapp.com/attachments/190284932520607745/332614998235021312/player_lobbies.png"
+
     static NO_LOBBIES_MSG = 'No lobbies up at this time. Be the change you'
         + ' want to see, be the hero we need but do not deserve. Here\'s how '
         + 'to create your own just paste the steam link here and I\'ll track '
         + 'it and help people find your lobby https://i.imgur.com/LvELaC5.png' 
-        + '\nType janus help for a list of commands';
+        + '\nType april help for a list of commands';
     static LOBBY_ALREADY_EXISTS_MSG = 'Lobby has already been added';
     static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'Please specify a lobby to close';
     static LOBBY_ADDED_MSG = 'Lobby has been added';
@@ -73,7 +86,7 @@ export class AprilBot
 
     ShowHelp(message : Message)
     {
-        
+        message.author.send(AprilBot.HELP_MSG);
     }
 
     private GetLobbyIndex(message : Message, user : string) : number {
