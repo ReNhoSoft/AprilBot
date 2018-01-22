@@ -15,11 +15,8 @@ static HELP_MSG = "Hello! :cat: I'm April of the Jellyfish Pirates and I'm here 
     + "Here is instructions on how to create your lobby, just paste the steam link in the channel when you're done and I'll keep track of it and help "
     + "others find your lobby :3 \nhttps://cdn.discordapp.com/attachments/190284932520607745/332614998235021312/player_lobbies.png"
 
-    static NO_LOBBIES_MSG = 'No lobbies up at this time. Be the change you'
-        + ' want to see, be the hero we need but do not deserve. Here\'s how '
-        + 'to create your own just paste the steam link here and I\'ll track '
-        + 'it and help people find your lobby https://i.imgur.com/LvELaC5.png' 
-        + '\nType april help for a list of commands';
+    static NO_LOBBIES_MSG = 'There\'s no lobbies to be found! At your Steam profile, right-click "join game" to copy the link for your lobby\'s'
+                        + ' address... and don\'t forget the onions! http://bit.ly/2DnXPPe'
     static LOBBY_ALREADY_EXISTS_MSG = 'Lobby has already been added';
     static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'Please specify a lobby to close';
     static LOBBY_ADDED_MSG = 'Lobby has been added';
