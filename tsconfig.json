@@ -10,5 +10,8 @@
     "files": [
         "index.ts",
         "aprilbot.ts",
+        "commands/cmdManager.ts",
+        "commands/command.ts",
+        "commands/commandType.ts",
     ]
 }
