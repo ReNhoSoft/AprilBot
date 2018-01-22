@@ -39,7 +39,7 @@ client.on('message', message => {
     aprilbot.ListLobbies(message, user);
     
   } else if(message.content.toLowerCase().startsWith("april help")) {
-    aprilbot.ShowHelp(message);
+    aprilbot.ShowHelp(message, "");
   }
 });
 

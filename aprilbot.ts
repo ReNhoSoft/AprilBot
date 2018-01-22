@@ -75,7 +75,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         message.channel.send(finalMessage);
     }
 
-    ShowHelp(message : Message)
+    ShowHelp(message : Message, user : string)
     {
         message.author.send(AprilBot.HELP_MSG);
     }
