@@ -1,18 +1,20 @@
 import { Client } from "discord.js";
 import { AprilBot } from "./aprilbot";
+import { config } from "dotenv";
 
+//Initialize env variables
+config();
 
-// Create an instance of a Discord client
+//Initialize discord client
 const client = new Client();
-
 let aprilbot : AprilBot;
-// The token of your bot - https://discordapp.com/developers/applications/me
 const token = process.env.BOT_TOKEN;
+
+const LobbyListMessages = [ "april where dem bois" , "april lobby?", "april lobbies" ]
 
 // The ready event is vital, it means that your bot will only start reacting to information
 // from Discord _after_ ready is emitted
 client.on('ready', () => {
-  
   let botName = client.user.username + '#' + client.user.discriminator;
   aprilbot = new AprilBot(botName);
   console.log('I am ready!');
@@ -21,7 +23,7 @@ client.on('ready', () => {
 
 // Create an event listener for messages
 client.on('message', message => {
-  if(message.channel.id != process.env.ALLOWED_CHANNEL){
+  if(message.channel.id != process.env.ALLOWED_CHANNEL_ID){
     return;
   }
 
