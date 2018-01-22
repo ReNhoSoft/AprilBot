@@ -5,10 +5,10 @@ import { Message } from 'discord.js';
 
 export class CommandDefinitions {
     static HELP = 'april help, janus help';
-    static LIST = 'april list,april lobbies,april lobby,april where dem bois';
+    static LIST = 'april list,april lobbies,april lobby,april where dem bois,janus list, janus lobbies, janus lobby, janus where dem bois';
     static ADDLOBBY = 'steam://joinlobby/';
-    static CLOSELOBBY = 'april close,april remove'
-    static QUESTION = 'april question, april i have a question,april answer'
+    static CLOSELOBBY = 'april close,april remove,janus close,janus remove'
+    static QUESTION = 'april question, april i have a question,april answer,janus question'
 }
 
 export class CommandManager
