@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+var random = require("random-js")();
 
 export class AprilBot
 {
@@ -15,7 +16,10 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'Please specify a lobby to close';
     static LOBBY_ADDED_MSG = 'Lobby has been added';
     static LOBBY_CLOSED_MSG = 'Lobby has been closed';
+    static QUESTION_RESPONSES = ["Can't predict right now", 'Outlook not so good', 'Don\'t count on it', 'My sources say no', 
+                                 'It is certain', 'Absolutely', 'Signs point to yes', 'It is decidedly so', 'You are in grave danger'];
 
+    
     username : string;
     lobbies : Array<LobbyEntry>;
 
@@ -94,6 +98,11 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
             return -1;
         }
         return lobbyIndex;
+    }
+    
+    AskQuestion(message:Message, user : string)
+    {
+        message.channel.send(random.pick(AprilBot.QUESTION_RESPONSES));
     }
 }
 
