@@ -2,24 +2,15 @@ import { Message } from "discord.js";
 
 export class AprilBot
 {
-static HELP_MSG = "Hello! :cat: I'm April of the Jellyfish Pirates and I'm here to help you find any recently posted lobbies.\n"
-    + "Here is a list of my commands:\n"
-    + "April list or lobby? - Lists all lobbies\n"
-    + "April close / April close n - Closes lobby n, with where n is a number ex; April close 3 would close lobby 3 in the lobby list.\n"
-    + "April question - A fortune telling command, use at your own risk my fortunes always come true. ex. April question, will I win EVO?  Like a magic "
-    + "8 ball, ask yes or no questions.\n\n"
-    + "To add a lobby to the list, just simply post any steam:// style lobby postings, so I'm very easy to use, and I won't list duplicates, and will "
-    + "delete the oldest lobbies in the list incase anyone forgets to close theirs.\n"
-    + "Note my commands only work in steam-netplay.\n"
-    + "If there's any problems or you have suggestions, message Lucky.\n"
-    + "Here is instructions on how to create your lobby, just paste the steam link in the channel when you're done and I'll keep track of it and help "
-    + "others find your lobby :3 \nhttps://cdn.discordapp.com/attachments/190284932520607745/332614998235021312/player_lobbies.png"
+static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help keep track of your Steam lobby urls.\n\n"
+                + "Here's a list of what I'll do for you:\n`April list` will lists all lobbies.\n`April close` will close your lobby.\n"
+                + "`April close` <insert number here> will close the lobby with the corresponding number.\n\n"
+                + "If you'd like to add a lobby to the list, just go to your Steam profile and right-click \"join game\""
+                + " to copy the link for your lobby's address. I won't list duplicates and only have a memory of five lobbies. So be mindful!\n" 
+                + "If there's an issue, message renhosoft#1325! \nhttp://bit.ly/2DnXPPe";
 
-    static NO_LOBBIES_MSG = 'No lobbies up at this time. Be the change you'
-        + ' want to see, be the hero we need but do not deserve. Here\'s how '
-        + 'to create your own just paste the steam link here and I\'ll track '
-        + 'it and help people find your lobby https://i.imgur.com/LvELaC5.png' 
-        + '\nType april help for a list of commands';
+    static NO_LOBBIES_MSG = 'There\'s no lobbies to be found! At your Steam profile, right-click "join game" to copy the link for your lobby\'s'
+                        + ' address... and don\'t forget the onions! http://bit.ly/2DnXPPe';
     static LOBBY_ALREADY_EXISTS_MSG = 'Lobby has already been added';
     static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'Please specify a lobby to close';
     static LOBBY_ADDED_MSG = 'Lobby has been added';
@@ -84,7 +75,7 @@ static HELP_MSG = "Hello! :cat: I'm April of the Jellyfish Pirates and I'm here 
         message.channel.send(finalMessage);
     }
 
-    ShowHelp(message : Message)
+    ShowHelp(message : Message, user : string)
     {
         message.author.send(AprilBot.HELP_MSG);
     }
