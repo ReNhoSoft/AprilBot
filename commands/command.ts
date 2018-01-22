@@ -1,28 +1,33 @@
 import { CommandType } from './commandType'
 import { Message } from 'discord.js';
+import { AprilBot } from '../aprilbot';
 
 export class Command {
 
-    constructor(name:string, aliases:string[], type:CommandType, callback:BotCallback) 
+    constructor(name:string, aliases:string[], type:CommandType, callback:BotCallback, bot : AprilBot) 
     { 
         this.name = name;
         this.alisases = aliases;
         this.type = type;
         this.callback = callback;
+        this.bot = bot;
     }
 
     name : string;
     alisases : string [];
     type : CommandType;
     callback: BotCallback;
+    bot : AprilBot;
 
     ProcessCommand(message: Message, user: string) : void {
-        if(this.ValidateCommand(message.content))
-            this.callback(message, user);
+        if(this.ValidateCommand(message.content.toLowerCase()))
+            this.callback.apply(this.bot, [message, user]);
     }
 
     ValidateCommand(command : string):boolean {
-        this.alisases.forEach(alias => {
+        for(let i = 0; i < this.alisases.length; i++)
+        {
+            let alias = this.alisases[i];
             switch(this.type) {
                 case CommandType.StartsWith: {
                     if(command.startsWith(alias))
@@ -40,10 +45,11 @@ export class Command {
                     break;
                 }
             }
-        });
-
+        
+        }
         return false;
     }
+   
 }
 
 export interface BotCallback {
