@@ -13,7 +13,8 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     static NO_LOBBIES_MSG = 'There\'s no lobbies to be found! At your Steam profile, right-click "join game" to copy the link for your lobby\'s'
                         + ' address... and don\'t forget the onions! http://bit.ly/2DnXPPe';
     static LOBBY_ALREADY_EXISTS_MSG = 'Lobby has already been added';
-    static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'Please specify a lobby to close';
+    static LOBBY_NOT_SPECIFIED_MSG = 'Please specify a lobby to close';
+    static CANNOT_FIND_LOBBY_TO_CLOSE_MSG = 'That lobby was not found, so it couldn\'t be closed.';
     static LOBBY_ADDED_MSG = 'Lobby has been added';
     static LOBBY_CLOSED_MSG = 'Lobby has been closed';
     static QUESTION_RESPONSES = ["Can't predict right now", 'Outlook not so good', 'Don\'t count on it', 'My sources say no', 
@@ -51,12 +52,17 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
 
     CloseLobby(message : Message, user : string)
     {
-        let lobbyIndex = this.GetLobbyIndex(message, user);
-        if(lobbyIndex < 0 || lobbyIndex >= this.lobbies.length) {
+        //Fail early
+        if(message.content.length > 11 && !this.IsValidIndex(message.content))
+        {
             message.channel.send(AprilBot.CANNOT_FIND_LOBBY_TO_CLOSE_MSG);
             return;
-        }
-        
+        } else if(!this.DoesUserHaveLobby(user)) {
+            message.channel.send(AprilBot.LOBBY_NOT_SPECIFIED_MSG);
+            return;
+        } 
+
+        let lobbyIndex = this.GetLobbyIndex(message, user);
         this.lobbies.splice(lobbyIndex, 1);
         message.channel.send(AprilBot.LOBBY_CLOSED_MSG);
     }
@@ -103,6 +109,18 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     AskQuestion(message:Message, user : string)
     {
         message.channel.send(random.pick(AprilBot.QUESTION_RESPONSES));
+    }
+
+    private IsValidIndex(content : string) : boolean
+    {
+        let lobbyIndex = Number.parseInt(content.substring(12));
+        return !isNaN(lobbyIndex) && lobbyIndex > 0 && lobbyIndex <= this.lobbies.length;
+    }
+
+    private DoesUserHaveLobby(user: string) : boolean
+    {
+        let lobby = this.lobbies.find((x) => { return x.user === user })
+        return lobby != null;
     }
 }
 
