@@ -53,17 +53,16 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     CloseLobby(message : Message, user : string)
     {
         //Fail early
-        if(message.content.length > 11 && !this.IsValidIndex(message.content))
-        {
-            message.channel.send(AprilBot.CANNOT_FIND_LOBBY_TO_CLOSE_MSG);
-            return;
-        } else if(!this.DoesUserHaveLobby(user)) {
+        let lobbyIndex = this.GetLobbyIndex(message.content);
+        let userLobbyIndex = this.GetUserLobbyIndex(user);
+        if(!isNaN(lobbyIndex) && userLobbyIndex < 0)
             message.channel.send(AprilBot.LOBBY_NOT_SPECIFIED_MSG);
-            return;
-        } 
-
-        let lobbyIndex = this.GetLobbyIndex(message, user);
-        this.lobbies.splice(lobbyIndex, 1);
+        
+        if(!isNaN(lobbyIndex) && lobbyIndex >= 0 && lobbyIndex < this.lobbies.length)
+            this.RemoveLobby(lobbyIndex);
+        else if(userLobbyIndex >= 0)
+            this.RemoveLobby(userLobbyIndex);
+        
         message.channel.send(AprilBot.LOBBY_CLOSED_MSG);
     }
 
@@ -89,38 +88,30 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     {
         message.author.send(AprilBot.HELP_MSG);
     }
-
-    private GetLobbyIndex(message : Message, user : string) : number {
-        let lobbyIndex : number;
-        lobbyIndex = Number.parseInt(message.content.substring(12)) - 1;
-        
-        if(isNaN(lobbyIndex))
-        {
-            let lobby = this.lobbies.find((x) => { return x.user === user })
-            if(lobby != null) {
-                lobbyIndex = this.lobbies.indexOf(lobby);
-                return lobbyIndex;
-            }
-            return -1;
-        }
-        return lobbyIndex;
-    }
     
     AskQuestion(message:Message, user : string)
     {
         message.channel.send(random.pick(AprilBot.QUESTION_RESPONSES));
     }
 
-    private IsValidIndex(content : string) : boolean
+    private RemoveLobby(index:number)
     {
-        let lobbyIndex = Number.parseInt(content.substring(12));
-        return !isNaN(lobbyIndex) && lobbyIndex > 0 && lobbyIndex <= this.lobbies.length;
+        this.lobbies.splice(index, 1);
     }
 
-    private DoesUserHaveLobby(user: string) : boolean
+    private GetLobbyIndex(content : string) : number
+    {
+        let lobbyIndex = Number.parseInt(content.substring(12));
+        return lobbyIndex - 1;
+    }
+
+    private GetUserLobbyIndex(user: string) : number
     {
         let lobby = this.lobbies.find((x) => { return x.user === user })
-        return lobby != null;
+        if(lobby != null)
+            return this.lobbies.indexOf(lobby);
+        
+        return -1;
     }
 }
 
