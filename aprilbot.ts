@@ -55,13 +55,18 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         //Fail early
         let lobbyIndex = this.GetLobbyIndex(message.content);
         let userLobbyIndex = this.GetUserLobbyIndex(user);
-        if(!isNaN(lobbyIndex) && userLobbyIndex < 0)
+        if(isNaN(lobbyIndex) && userLobbyIndex < 0) {
             message.channel.send(AprilBot.LOBBY_NOT_SPECIFIED_MSG);
+            return;
+        }
         
         if(!isNaN(lobbyIndex) && lobbyIndex >= 0 && lobbyIndex < this.lobbies.length)
+        {
             this.RemoveLobby(lobbyIndex);
-        else if(userLobbyIndex >= 0)
+        }
+        else if(userLobbyIndex >= 0) {
             this.RemoveLobby(userLobbyIndex);
+        }
         
         message.channel.send(AprilBot.LOBBY_CLOSED_MSG);
     }
