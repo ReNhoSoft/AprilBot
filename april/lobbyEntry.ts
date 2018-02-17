@@ -14,7 +14,7 @@ export class LobbyEntry {
     }
 
     ToMessage() : string {
-        return this.user + ' ' + this.message + ' ' + this.GetTimeString();
+        return this.user.username + ' ' + this.message + ' ' + this.GetTimeString();
     }
 
     GetTimeString() : string
