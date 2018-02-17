@@ -1,6 +1,6 @@
 import { Command } from './command'
 import { CommandType } from './commandType'
-import { AprilBot } from '../aprilbot'
+import { AprilBot } from '../april/aprilbot'
 import { Message, Client, TextChannel, User } from 'discord.js';
 
 export class CommandDefinitions {
@@ -30,7 +30,7 @@ export class CommandManager
 
     ExecuteCommand(message: Message)
     {
-        if(message.channel.id != process.env.ALLOWED_CHANNEL_ID){
+        if(message.channel.id != process.env.STEAM_CHANNEL_ID){
             return;
           }
           this.commands.forEach(command => {

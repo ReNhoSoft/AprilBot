@@ -1,5 +1,5 @@
 import { Client, TextChannel } from "discord.js";
-import { AprilBot } from "./aprilbot";
+import { AprilBot } from "./april/aprilbot";
 import { config } from "dotenv";
 import { CommandManager } from './commands/cmdManager'
 
@@ -15,7 +15,7 @@ let  manager : CommandManager;
 // The ready event is vital, it means that your bot will only start reacting to information
 // from Discord _after_ ready is emitted
 client.on('ready', () => {
-  let lobbyChannel = client.channels.get(process.env.LOBBY_CHANNEL) as TextChannel;
+  let lobbyChannel = client.channels.get(process.env.LOBBY_CHANNEL_ID) as TextChannel;
   manager = new CommandManager(client.user, lobbyChannel);
   console.log('I am ready!');
 });

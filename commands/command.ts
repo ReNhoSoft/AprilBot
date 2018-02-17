@@ -1,6 +1,6 @@
 import { CommandType } from './commandType'
 import { Message, User } from 'discord.js';
-import { AprilBot } from '../aprilbot';
+import { AprilBot } from '../april/aprilbot';
 
 export class Command {
 
