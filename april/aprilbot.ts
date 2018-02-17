@@ -73,6 +73,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         }
         
         message.channel.send(AprilBot.LOBBY_CLOSED_MSG);
+        this.UpdateLobby();
     }
 
     ListLobbies(message : Message, user : User)
@@ -125,7 +126,6 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
 
     private UpdateLobby() :void
     {
-        
         this.lobbyListChannel.fetchMessages({ limit: 10 })
             .then(messages => { 
                 messages.array().forEach(element => {
@@ -142,6 +142,10 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
                         description: lobbyDetails.message + '\n @ ' + lobbyDetails.GetTimeInCST() + 'CST'
                         }});    
                 });
+            }).then( () => {
+                if(this.lobbies.length == 0) {
+                    this.lobbyListChannel.send(AprilBot.NO_LOBBIES_MSG);
+                }
             })                     
             .catch(console.error);
      }
