@@ -1,14 +1,14 @@
 import { Command } from './command'
 import { CommandType } from './commandType'
 import { AprilBot } from '../aprilbot'
-import { Message } from 'discord.js';
+import { Message, Client, TextChannel, User } from 'discord.js';
 
 export class CommandDefinitions {
     static HELP = 'april help, janus help';
     static LIST = 'april list,april lobbies,april lobby,april where dem bois,janus list, janus lobbies, janus lobby, janus where dem bois';
     static ADDLOBBY = 'steam://joinlobby/';
-    static CLOSELOBBY = 'april close,april remove,janus close,janus remove'
-    static QUESTION = 'april question, april i have a question,april answer,janus question'
+    static CLOSELOBBY = 'april close,april remove,janus close,janus remove';
+    static QUESTION = 'april question, april i have a question,april answer,janus question';
 }
 
 export class CommandManager
@@ -17,9 +17,9 @@ export class CommandManager
     commands : Command[];
     aprilbot : AprilBot;
 
-    constructor(botName:string) 
+    constructor(botUser:User, lobbyChannel:TextChannel) 
     { 
-        this.aprilbot = new AprilBot(botName);
+        this.aprilbot = new AprilBot(botUser, lobbyChannel);
         this.commands = [];
         this.commands.push(new Command("question", CommandDefinitions.QUESTION.split(","), CommandType.StartsWith, this.aprilbot.AskQuestion, this.aprilbot));
         this.commands.push(new Command("help", CommandDefinitions.HELP.split(","), CommandType.StartsWith, this.aprilbot.ShowHelp, this.aprilbot));
@@ -33,10 +33,8 @@ export class CommandManager
         if(message.channel.id != process.env.ALLOWED_CHANNEL_ID){
             return;
           }
-        
-          var user = message.author.username + '#' + message.author.discriminator
           this.commands.forEach(command => {
-              command.ProcessCommand(message, user);
+              command.ProcessCommand(message, message.author);
           })
     }
 }

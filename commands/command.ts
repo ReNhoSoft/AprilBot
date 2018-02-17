@@ -1,5 +1,5 @@
 import { CommandType } from './commandType'
-import { Message } from 'discord.js';
+import { Message, User } from 'discord.js';
 import { AprilBot } from '../aprilbot';
 
 export class Command {
@@ -19,7 +19,7 @@ export class Command {
     callback: BotCallback;
     bot : AprilBot;
 
-    ProcessCommand(message: Message, user: string) : void {
+    ProcessCommand(message: Message, user: User) : void {
         if(this.ValidateCommand(message.content.toLowerCase()))
             this.callback.apply(this.bot, [message, user]);
     }
@@ -53,5 +53,5 @@ export class Command {
 }
 
 export interface BotCallback {
-    (message:Message, user:string):void;
+    (message:Message, user:User):void;
 }

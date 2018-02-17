@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, TextChannel, User } from "discord.js";
 var random = require("random-js")();
 
 export class AprilBot
@@ -20,21 +20,22 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     static QUESTION_RESPONSES = ["Can't predict right now", 'Outlook not so good', 'Don\'t count on it', 'My sources say no', 
                                  'It is certain', 'Absolutely', 'Signs point to yes', 'It is decidedly so', 'You are in grave danger'];
 
-    
-    username : string;
+    user : User;
     lobbies : Array<LobbyEntry>;
+    lobbyListChannel : TextChannel;
 
-    constructor(username : string) {
-        this.username = username;
+    constructor(user : User, channel:TextChannel) {
+        this.user = user;
         this.lobbies = [];
+        this.lobbyListChannel = channel;
      };
 
-    AddLobby(message : Message, user : string)
+    AddLobby(message : Message, user : User)
     {
         var lobby = message.content;
 
         //Ignore if the message is comming from the bot itself
-        if(user == this.username)
+        if(user == this.user)
         {
             return;
         }
@@ -48,9 +49,11 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         //Add lobby to the collection
         this.lobbies.unshift(new LobbyEntry(user, lobby, Date.now()));
         message.channel.send(AprilBot.LOBBY_ADDED_MSG);
+
+        this.UpdateLobby()
     }
 
-    CloseLobby(message : Message, user : string)
+    CloseLobby(message : Message, user : User)
     {
         //Fail early
         let lobbyIndex = this.GetLobbyIndex(message.content);
@@ -71,7 +74,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         message.channel.send(AprilBot.LOBBY_CLOSED_MSG);
     }
 
-    ListLobbies(message : Message, user : string)
+    ListLobbies(message : Message, user : User)
     {
         if(this.lobbies.length == 0)
         {
@@ -89,12 +92,12 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         message.channel.send(finalMessage);
     }
 
-    ShowHelp(message : Message, user : string)
+    ShowHelp(message : Message, user : User)
     {
         message.author.send(AprilBot.HELP_MSG);
     }
     
-    AskQuestion(message:Message, user : string)
+    AskQuestion(message:Message, user : User)
     {
         message.channel.send(random.pick(AprilBot.QUESTION_RESPONSES));
     }
@@ -110,7 +113,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         return lobbyIndex - 1;
     }
 
-    private GetUserLobbyIndex(user: string) : number
+    private GetUserLobbyIndex(user: User) : number
     {
         let lobby = this.lobbies.find((x) => { return x.user === user })
         if(lobby != null)
@@ -118,14 +121,38 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         
         return -1;
     }
+
+    private UpdateLobby() :void
+    {
+        
+        this.lobbyListChannel.fetchMessages({ limit: 10 })
+            .then(messages => { 
+                messages.array().forEach(element => {
+                    element.delete();
+                });
+            }).then(() => {
+                this.lobbies.forEach(lobbyDetails => {
+                    this.lobbyListChannel.send("", {embed: {
+                        author: {
+                            name: `${lobbyDetails.user.username}`,
+                            icon_url: lobbyDetails.user.avatarURL ? lobbyDetails.user.avatarURL : undefined,
+                            timestamp: lobbyDetails.time 
+                        },
+                        description: lobbyDetails.message + '\n' + lobbyDetails.GetTimeString()
+                        }});    
+                });
+                
+            })                     
+            .catch(console.error);
+     }
 }
 
 export class LobbyEntry {
-    user : string;
+    user : User;
     message : string;
     time : number;
 
-    constructor(user : string, message : string, time : number)
+    constructor(user : User, message : string, time : number)
     {
         this.user = user;
         this.message = message;
