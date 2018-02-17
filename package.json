@@ -35,6 +35,7 @@
     "discord.js": "^11.2.1",
     "dotenv": "^4.0.0",
     "forever": "^0.15.3",
+    "moment": "^2.20.1",
     "random-js": "^1.0.8"
   }
 }

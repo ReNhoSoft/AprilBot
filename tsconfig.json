@@ -9,7 +9,8 @@
     },
     "files": [
         "index.ts",
-        "aprilbot.ts",
+        "april/aprilbot.ts",
+        "april/lobbyEntry.ts",
         "commands/cmdManager.ts",
         "commands/command.ts",
         "commands/commandType.ts",
