@@ -8,7 +8,7 @@
     "clean": "rimraf dist",
     "setup": "git clean -xdf && git reset --hard HEAD && git pull && npm install && tsc",
     "build": "tsc",
-    "start": "tsc && node index.js"
+    "start": "tsc && forever index.js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,11 @@
   "dependencies": {
     "@types/dotenv": "^4.0.2",
     "@types/node": "^8.5.7",
+    "@types/random-js": "^1.0.30",
     "discord.js": "^11.2.1",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "forever": "^0.15.3",
+    "moment": "^2.20.1",
+    "random-js": "^1.0.8"
   }
 }
