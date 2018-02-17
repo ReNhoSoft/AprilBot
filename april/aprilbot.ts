@@ -83,14 +83,14 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
             message.channel.send(AprilBot.NO_LOBBIES_MSG);
             return;
         }
-        let finalMessage = "List of lobbies ordered newest to oldest:";
+        let finalMessage = "You can get an always up to date list of the lobbies in " + this.lobbyListChannel + ", check it out!\nList of lobbies ordered newest to oldest:";
         let count = 1;
         this.lobbies.forEach(lobby => {
             finalMessage += '\n' + count + ') ' + lobby.ToMessage();
             count++;
         });
 
-        finalMessage += '\nType April Help for a list of my commands.'
+        finalMessage += '\nType April Help for a list of my commands.';
         message.channel.send(finalMessage);
     }
 
