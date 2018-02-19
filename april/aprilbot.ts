@@ -78,15 +78,9 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
 
     ListLobbies(message : Message, user : User)
     {
-        if(this.lobbies.length == 0)
-        {
-            message.channel.send(AprilBot.NO_LOBBIES_MSG);
-            return;
-        }
-        let finalMessage = "You can get an always up to date list of the lobbies in " + this.lobbyListChannel + "";
-
-        finalMessage += '\nType April Help for a list of my commands.';
-        message.channel.send(finalMessage);
+        message.channel.send( "You can get an always up to date list of the lobbies in " 
+                                + this.lobbyListChannel 
+                                + "\nType April Help for a list of my commands.");
     }
 
     ShowHelp(message : Message, user : User)
