@@ -83,12 +83,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
             message.channel.send(AprilBot.NO_LOBBIES_MSG);
             return;
         }
-        let finalMessage = "You can get an always up to date list of the lobbies in " + this.lobbyListChannel + ", check it out!\nList of lobbies ordered newest to oldest:";
-        let count = 1;
-        this.lobbies.forEach(lobby => {
-            finalMessage += '\n' + count + ') ' + lobby.ToMessage();
-            count++;
-        });
+        let finalMessage = "You can get an always up to date list of the lobbies in " + this.lobbyListChannel + "";
 
         finalMessage += '\nType April Help for a list of my commands.';
         message.channel.send(finalMessage);
@@ -133,7 +128,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
                 });
             }).then(() => {
                 this.lobbies.forEach(lobbyDetails => {
-                    this.lobbyListChannel.send("", {embed: {
+                    this.lobbyListChannel.send( (this.lobbies.indexOf(lobbyDetails) + 1) + ")", {embed: {
                         author: {
                             name: `${lobbyDetails.user.username}`,
                             icon_url: lobbyDetails.user.avatarURL ? lobbyDetails.user.avatarURL : undefined,
