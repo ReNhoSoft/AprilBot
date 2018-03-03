@@ -1,0 +1,29 @@
+{
+    "name":"Johnny",
+    "weightClass":"Heavy", 
+    "defenseModifier":"1",
+    "guts": "3",
+    "stunResistance": "60",
+    "jumpStartup":"4F",
+    "backdash":"11F",
+    "backdashInvincibility":"1-7F",
+    "faceDownWakeup":"24 F",
+    "faceUpWakeup":"25F",
+    "moves": [{
+            "name":"5P",
+            "moveProperties":[
+                {"name":"Startup", "value":"5" },
+                {"name":"Active", "value":"4" },
+                {"name":"Recovery", "value":"6" }
+            ]
+        },
+        {
+            "name":"5K",
+            "moveProperties":[
+                {"name":"Startup", "value":"6" },
+                {"name":"Active", "value":"5" },
+                {"name":"Recovery", "value":"12" }
+            ]
+        }
+    ]
+}
