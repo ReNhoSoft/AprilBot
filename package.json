@@ -36,6 +36,7 @@
     "dotenv": "^4.0.0",
     "forever": "^0.15.3",
     "moment": "^2.20.1",
-    "random-js": "^1.0.8"
+    "random-js": "^1.0.8",
+    "typescript-string-operations": "^1.2.4"
   }
 }

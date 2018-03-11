@@ -2,6 +2,7 @@ import { Message, User, Client } from "discord.js";
 import { IBot } from "../IBot"
 import { IBotModule } from "../botModules/IBotModule";
 import { SteamLobbyModule } from "../botModules/steamlobbies/steamLobbyModule";
+import { FrameDataModule } from "../botModules/frameData/frameDataModule";
 var random = require("random-js")();
 
 export class AprilBot implements IBot
@@ -14,6 +15,7 @@ export class AprilBot implements IBot
         this.user = user;
         this.client = client;
         this.modules.push(new SteamLobbyModule(this));
+        this.modules.push(new FrameDataModule(this))
     };
 
     ExecuteTextCommand(message:Message):void {

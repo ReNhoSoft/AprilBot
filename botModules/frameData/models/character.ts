@@ -1,4 +1,4 @@
-import { Move } from "./Move";
+import { Move, MoveProperty } from "./Move";
 
 export class Character {
     name:string;
@@ -13,7 +13,15 @@ export class Character {
     faceDownWakeup:number;
     faceUpWakeup:number;
 
-    moves:Move[]
+    moves:Move[];
+
+    GetMove(name:string):Move {
+        for(let move of this.moves) {
+            if(move.name.toLowerCase() === name)
+                return move;
+        }
+        return null;
+    }
 }
 
 export enum Weightclass {

@@ -16,9 +16,6 @@ export class CommandManager
 
     ExecuteCommand(message: Message)
     {
-        if(message.channel.id != process.env.STEAM_CHANNEL_ID){
-            return;
-          }
           this.commands.forEach(command => {
               command.ProcessCommand(message, message.author);
           })

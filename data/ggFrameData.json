@@ -1,4 +1,4 @@
-{
+[{
     "name":"Johnny",
     "weightClass":"Heavy", 
     "defenseModifier":"1",
@@ -27,3 +27,4 @@
         }
     ]
 }
+]

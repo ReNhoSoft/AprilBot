@@ -55,6 +55,9 @@ export class SteamLobbyModule implements IBotModule {
     }
 
     ExecuteTextCommand(message:Message):void {
+        if(message.channel.id != process.env.STEAM_CHANNEL_ID){
+            return;
+        }
         this.commandManager.ExecuteCommand(message);
     }
 
