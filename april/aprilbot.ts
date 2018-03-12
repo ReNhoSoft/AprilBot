@@ -20,6 +20,8 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     static LOBBY_CLOSED_MSG = 'Lobby has been closed';
     static QUESTION_RESPONSES = ["Can't predict right now", 'Outlook not so good', 'Don\'t count on it', 'My sources say no', 
                                  'It is certain', 'Absolutely', 'Signs point to yes', 'It is decidedly so', 'You are in grave danger'];
+    static LOBBY_HEADER = 'There\'s a problem with update 2.1 and steam links are not working, nor joining through steam friends.\n'
+                            + 'As a temporal solution, you can add your lobby code by typing: !add *code*\n\n.';
 
     user : User;
     lobbies : Array<LobbyEntry>;
@@ -54,6 +56,25 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
         this.UpdateLobby()
     }
 
+    AddLobby2(message : Message, user : User)
+    {
+        var lobby = message.content;
+
+        let endMessage = '**CODE**:' + lobby.substring(4);
+        //Ignore if the message is comming from the bot itself
+        if(user == this.user)
+        {
+            return;
+        }
+        
+        
+        //Add lobby to the collection
+        this.lobbies.unshift(new LobbyEntry(user, endMessage, Date.now()));
+        message.channel.send(AprilBot.LOBBY_ADDED_MSG);
+
+        this.UpdateLobby()
+    }
+
     CloseLobby(message : Message, user : User)
     {
         //Fail early
@@ -80,7 +101,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
     {
         if(this.lobbies.length == 0)
         {
-            message.channel.send(AprilBot.NO_LOBBIES_MSG);
+            message.channel.send(AprilBot.LOBBY_HEADER);
             return;
         }
         let finalMessage = "You can get an always up to date list of the lobbies in " + this.lobbyListChannel + ", check it out!\nList of lobbies ordered newest to oldest:";
@@ -132,6 +153,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
                     element.delete();
                 });
             }).then(() => {
+                this.lobbyListChannel.send(AprilBot.LOBBY_HEADER);
                 this.lobbies.forEach(lobbyDetails => {
                     this.lobbyListChannel.send("", {embed: {
                         author: {
@@ -144,7 +166,7 @@ static HELP_MSG = "Hi there! I'm April, of the Jellyfish Pirates, here to help k
                 });
             }).then( () => {
                 if(this.lobbies.length == 0) {
-                    this.lobbyListChannel.send(AprilBot.NO_LOBBIES_MSG);
+                    //this.lobbyListChannel.send(AprilBot.NO_LOBBIES_MSG);
                 }
             })                     
             .catch(console.error);

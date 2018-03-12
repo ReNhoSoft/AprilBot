@@ -9,6 +9,7 @@ export class CommandDefinitions {
     static ADDLOBBY = 'steam://joinlobby/';
     static CLOSELOBBY = 'april close,april remove,janus close,janus remove';
     static QUESTION = 'april question, april i have a question,april answer,janus question';
+    static ADDLOBBY2 = '!add ';
 }
 
 export class CommandManager
@@ -25,6 +26,7 @@ export class CommandManager
         this.commands.push(new Command("help", CommandDefinitions.HELP.split(","), CommandType.StartsWith, this.aprilbot.ShowHelp, this.aprilbot));
         this.commands.push(new Command("list", CommandDefinitions.LIST.split(","), CommandType.StartsWith, this.aprilbot.ListLobbies, this.aprilbot));
         this.commands.push(new Command("addlobby", CommandDefinitions.ADDLOBBY.split(","), CommandType.Contains, this.aprilbot.AddLobby, this.aprilbot));
+        this.commands.push(new Command("addlobby", CommandDefinitions.ADDLOBBY2.split(","), CommandType.Contains, this.aprilbot.AddLobby2, this.aprilbot));
         this.commands.push(new Command("closelobby", CommandDefinitions.CLOSELOBBY.split(","), CommandType.StartsWith, this.aprilbot.CloseLobby, this.aprilbot));
     };
 
