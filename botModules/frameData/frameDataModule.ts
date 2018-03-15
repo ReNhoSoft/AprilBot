@@ -30,16 +30,16 @@ export class FrameDataModule implements IBotModule{
 
     ExecuteTextCommand(message: Message):void {
         return;
-        if(message.content.toLowerCase().startsWith(".fd")){
-            let content = message.content.toLowerCase();
-            let cmdValues = content.split(" ");
-            let char = this.FindCharacter(cmdValues[1]);
-            let move:Move;
-            if(char)
-                move = char.GetMove(cmdValues[2])
-            if(move)
-                console.log(Transforms.MoveDataToMessage(char, move));
-        }
+        // if(message.content.toLowerCase().startsWith(".fd")){
+        //     let content = message.content.toLowerCase();
+        //     let cmdValues = content.split(" ");
+        //     let char = this.FindCharacter(cmdValues[1]);
+        //     let move:Move;
+        //     if(char)
+        //         move = char.GetMove(cmdValues[2])
+        //     if(move)
+        //         console.log(Transforms.MoveDataToMessage(char, move));
+        // }
     }
 
     FindCharacter(name:string):Character {
