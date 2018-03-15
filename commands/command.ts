@@ -1,27 +1,28 @@
 import { CommandType } from './commandType'
 import { Message, User } from 'discord.js';
 import { AprilBot } from '../april/aprilbot';
+import { IBotModule } from '../botModules/IBotModule';
 
 export class Command {
 
-    constructor(name:string, aliases:string[], type:CommandType, callback:BotCallback, bot : AprilBot) 
+    constructor(name:string, aliases:string[], type:CommandType, callback:BotCallback,  botModule : IBotModule) 
     { 
         this.name = name;
         this.alisases = aliases;
         this.type = type;
         this.callback = callback;
-        this.bot = bot;
+        this.botModule = botModule;
     }
 
     name : string;
     alisases : string [];
     type : CommandType;
     callback: BotCallback;
-    bot : AprilBot;
+    botModule : IBotModule;
 
     ProcessCommand(message: Message, user: User) : void {
         if(this.ValidateCommand(message.content.toLowerCase()))
-            this.callback.apply(this.bot, [message, user]);
+            this.callback.apply(this.botModule, [message, user]);
     }
 
     ValidateCommand(command : string):boolean {
