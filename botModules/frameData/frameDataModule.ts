@@ -29,6 +29,7 @@ export class FrameDataModule implements IBotModule{
     }
 
     ExecuteTextCommand(message: Message):void {
+        return;
         if(message.content.toLowerCase().startsWith(".fd")){
             let content = message.content.toLowerCase();
             let cmdValues = content.split(" ");
