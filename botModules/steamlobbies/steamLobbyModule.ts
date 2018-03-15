@@ -14,6 +14,7 @@ class CommandDefinitions {
     static ADDLOBBY = 'steam://joinlobby/';
     static CLOSELOBBY = 'april close,april remove,janus close,janus remove';
     static QUESTION = 'april question, april i have a question,april answer,janus question';
+    static ADDLOBBYCODE = '!add '
 }
 
 class LobbyMessages {
@@ -34,12 +35,15 @@ class LobbyMessages {
     static LOBBY_CLOSED_MSG = 'Lobby has been closed';
     static QUESTION_RESPONSES = ["Can't predict right now", 'Outlook not so good', 'Don\'t count on it', 'My sources say no', 
                         'It is certain', 'Absolutely', 'Signs point to yes', 'It is decidedly so', 'You are in grave danger'];
+    static HEADER_MESSAGE = "There's a problem with update 2.1 and steam links are not working, nor joining through steam friends.\n"
+                            +"As a temporary solution, you can add your lobby code by typing: !add code";
 }
 
 export class SteamLobbyModule implements IBotModule {
     bot : IBot;
     user : User;
     lobbies : Array<LobbyEntry> = [];
+    psnLobbies : Array<LobbyEntry> = [];
     lobbyListChannel : TextChannel;
     commandManager:CommandManager;
 
@@ -51,11 +55,13 @@ export class SteamLobbyModule implements IBotModule {
         this.commandManager.AddCommand("help", CommandDefinitions.HELP.split(","), CommandType.StartsWith, this.ShowHelp, this);
         this.commandManager.AddCommand("list", CommandDefinitions.LIST.split(","), CommandType.StartsWith, this.ListLobbies, this);
         this.commandManager.AddCommand("addlobby", CommandDefinitions.ADDLOBBY.split(","), CommandType.Contains, this.AddLobby, this);
+        this.commandManager.AddCommand("addpsnlobbycode", CommandDefinitions.ADDLOBBYCODE.split(","), CommandType.StartsWith, this.AddPSNLobbyCode, this);
+        this.commandManager.AddCommand("addsteamlobbycode", CommandDefinitions.ADDLOBBYCODE.split(","), CommandType.StartsWith, this.AddSteamLobbyCode, this);
         this.commandManager.AddCommand("closelobby", CommandDefinitions.CLOSELOBBY.split(","), CommandType.StartsWith, this.CloseLobby, this);
     }
 
     ExecuteTextCommand(message:Message):void {
-        if(message.channel.id != process.env.STEAM_CHANNEL_ID){
+        if(message.channel.id != process.env.STEAM_CHANNEL_ID && message.channel.id != process.env.PSN_CHANNEL_ID){
             return;
         }
         this.commandManager.ExecuteCommand(message);
@@ -83,6 +89,44 @@ export class SteamLobbyModule implements IBotModule {
         message.channel.send(LobbyMessages.LOBBY_ADDED_MSG);
 
         this.UpdateLobby()
+    }
+
+    AddLobbyCode(message : Message, user : User, lobbies:Array<LobbyEntry>)
+    {
+        var lobby = message.content.split(' ')[1];
+
+        //Ignore if the message is comming from the bot itself
+        if(user == this.user)
+        {
+            return;
+        }
+
+        //If lobby has already been added, send error message and ignore it
+        if(lobbies.find((x) => { return x.message === lobby })) {
+            message.channel.send(LobbyMessages.LOBBY_ALREADY_EXISTS_MSG);
+            return;
+        }
+
+        //Add lobby to the collection
+        lobbies.unshift(new LobbyEntry(user, lobby, Date.now()));
+        message.channel.send(LobbyMessages.LOBBY_ADDED_MSG);
+
+        this.UpdateLobby()
+    }
+
+    AddSteamLobbyCode(message : Message, user : User)
+    {
+        if(message.channel.id == process.env.STEAM_CHANNEL_ID)
+        {
+            this.AddLobbyCode(message, user, this.lobbies);
+        }
+    }
+
+    AddPSNLobbyCode(message : Message, user : User)
+    {
+        if(message.channel.id == process.env.PSN_CHANNEL_ID) {
+            this.AddLobbyCode(message, user, this.psnLobbies);
+        }
     }
 
     CloseLobby(message : Message, user : User)
@@ -152,8 +196,21 @@ export class SteamLobbyModule implements IBotModule {
                     element.delete();
                 });
             }).then(() => {
+                this.lobbyListChannel.send(LobbyMessages.HEADER_MESSAGE);
+                this.lobbyListChannel.send("** ------------ STEAM LOBBIES ----------- **");
                 this.lobbies.forEach(lobbyDetails => {
                     this.lobbyListChannel.send( (this.lobbies.indexOf(lobbyDetails) + 1) + ")", {embed: {
+                        author: {
+                            name: `${lobbyDetails.user.username}`,
+                            icon_url: lobbyDetails.user.avatarURL ? lobbyDetails.user.avatarURL : undefined,
+                            timestamp: lobbyDetails.time 
+                        },
+                        description: lobbyDetails.message + '\n @ ' + lobbyDetails.GetTimeInCST() + 'CST'
+                        }});    
+                });
+                this.lobbyListChannel.send("\n** ----------- PSN LOBBIES ----------- **");
+                this.psnLobbies.forEach(lobbyDetails => {
+                    this.lobbyListChannel.send( (this.psnLobbies.indexOf(lobbyDetails) + 1) + ")", {embed: {
                         author: {
                             name: `${lobbyDetails.user.username}`,
                             icon_url: lobbyDetails.user.avatarURL ? lobbyDetails.user.avatarURL : undefined,
