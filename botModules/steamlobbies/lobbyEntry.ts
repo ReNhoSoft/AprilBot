@@ -5,12 +5,14 @@ export class LobbyEntry {
     user : User;
     message : string;
     time : number;
+    type:LobbyType;
 
-    constructor(user : User, message : string, time : number)
+    constructor(user : User, message : string, time : number, type: LobbyType)
     {
         this.user = user;
         this.message = message;
         this.time = time;
+        this.type = type;
     }
 
     ToMessage() : string {
@@ -44,4 +46,20 @@ export class LobbyEntry {
     {
         return moment(this.time).format('HH:mm:ss');
     }
+
+    GetLobbyTypeString() :string 
+    {
+        switch(this.type) {
+            case LobbyType.PsnCode: 
+                return "**PSN LOBBY**";
+            case LobbyType.SteamLink: 
+                return "**STEAM LOBBY**";
+        }
+        return "";
+    }
+}
+
+export enum LobbyType {
+    PsnCode,
+    SteamLink
 }
